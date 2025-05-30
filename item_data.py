@@ -1,7 +1,7 @@
 ALL_GAME_ITEMS = [
     {
         "name": "Rock",
-        "weight": 0.60,
+        "weight": 0.80,
         "description": "Rock No value",
         "effect_type": "none"
     },
