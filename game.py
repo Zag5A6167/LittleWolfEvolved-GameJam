@@ -73,7 +73,7 @@ class Game:
 
     def setup_menu_btn(self):
         buttonWidth = 200
-        buttonHeight = 50
+        buttonHeight = 80
         padding = 50
       
 
