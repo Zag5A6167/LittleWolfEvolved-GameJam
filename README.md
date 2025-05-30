@@ -1,6 +1,3 @@
-# LittleWolfEvolved-GameJam
-
-
 # Little Wolf Evolved - Game Jam Submission  
 
 🎮 **About this game**  
