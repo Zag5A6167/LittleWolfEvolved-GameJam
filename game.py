@@ -1,7 +1,9 @@
 import  pygame 
 import os
+import random
 from wolf import Wolf
 from button import Button
+from item_data import ALL_GAME_ITEMS,POSSIBLE_ITEM_NAMES,ITEM_WEIGHTS
 class Game:
     def __init__(self,screen_width,screen_height,caption):
        self.screen_width = screen_width
@@ -11,6 +13,9 @@ class Game:
        self.screen_height_center = screen_height // 2
        self.screen = pygame.display.set_mode((screen_width,screen_height))
        pygame.display.set_caption(caption)
+
+       self.background = pygame.image.load(os.path.join("asset", "background", "background_main.png")).convert_alpha()
+
 
        self.button_font_size = 32
        self.menu_button_font = pygame.font.Font(None, self.button_font_size) 
@@ -24,13 +29,18 @@ class Game:
        self.FPS = 60
 
        self.all_sprites = pygame.sprite.Group()
+
        
        #####create   wolf ####
        self.wolf  = Wolf(self.screen_width_center,self.screen_height_center)
        self.all_sprites.add(self.wolf)
        
       
-    
+        ### item data ###
+       self.all_game_items_data = ALL_GAME_ITEMS
+       self.possible_item_names = POSSIBLE_ITEM_NAMES
+       self.item_weights = ITEM_WEIGHTS
+
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -41,7 +51,8 @@ class Game:
                 button.handle_event(event)
 
     def draw(self):
-        self.screen.fill((255,255,0))
+        # self.screen.fill((255,255,0))
+        self.screen.blit(self.background,(0,0))
         self.all_sprites.draw(self.screen)
         for button in self.buttons:
             button.draw(self.screen)
@@ -66,10 +77,30 @@ class Game:
         padding = 50
       
 
-        self.testBtn = Button(padding,padding,buttonWidth,buttonHeight,"Go to Bed",self.menu_button_font,action=self._testButton,color=(255,255,255),hover_color=(255,0,200)
+        self.testBtn = Button(padding,padding,buttonWidth,buttonHeight,"Go Hunting",self.menu_button_font,action=self._goHuntingButton,color=(255,255,255),hover_color=(255,0,200)
                              )
 
         self.buttons.append(self.testBtn)
 
-    def _testButton(self):
-        print("Hello world")
+    def _goHuntingButton(self):
+        chosen_item_name = random.choices(self.possible_item_names, weights=self.item_weights, k=1)[0]
+
+
+        chosen_item_data = next((item for item in self.all_game_items_data if item["name"] == chosen_item_name), None)
+
+        if chosen_item_data:
+            print(f"Your found[{chosen_item_data['name']}]!")
+   
+            print(f"Description: {chosen_item_data.get('description', 'No description available.')}")
+
+            effect_type = chosen_item_data.get("effect_type")
+            effect_value = chosen_item_data.get("effect_value", 0) 
+
+            if effect_type == "none":
+                pass
+
+            else:
+                print(f"Item '{chosen_item_data['name']}' has an unsupported effect type: {effect_type}.")
+        else:
+            print(f"Error: Could not find data for item '{chosen_item_name}'.")
+        # -----------------------------------------------------

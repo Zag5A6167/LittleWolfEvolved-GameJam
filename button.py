@@ -16,12 +16,19 @@ class Button:
         self.hover_color = hover_color
         self.text_color = text_color
 
+        self.border_color = (0,0,0)
+        self.border_width = 5
+
+
     def draw(self, surface):
       
         mouse_pos = pygame.mouse.get_pos()
 
         current_color = self.hover_color if self.rect.collidepoint(mouse_pos) else self.color
         pygame.draw.rect(surface, current_color, self.rect)
+
+
+        pygame.draw.rect(surface, self.border_color, self.rect, self.border_width)
 
         text_surface = self.font.render(self.text, True, self.text_color)
         text_rect = text_surface.get_rect(center=self.rect.center)
