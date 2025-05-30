@@ -13,6 +13,14 @@ ALL_GAME_ITEMS = [
         "effect_type": "none"
         
     },
+    {
+        "name": "Banana Trash",
+        "weight": 0.90,
+        "description": "You slipped on a banana and lost 2 health.",
+        "effect_type": "fall_and_damage",
+        "damage_amout": 2
+        
+    },
    
     
 

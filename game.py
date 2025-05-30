@@ -54,6 +54,7 @@ class Game:
         # self.screen.fill((255,255,0))
         self.screen.blit(self.background,(0,0))
         self.all_sprites.draw(self.screen)
+        self.wolf.draw_health_bar(self.screen,self.screen_width)
         for button in self.buttons:
             button.draw(self.screen)
 
@@ -77,13 +78,23 @@ class Game:
         padding = 50
       
 
-        self.testBtn = Button(padding,padding,buttonWidth,buttonHeight,"Go Hunting",self.menu_button_font,action=self._goHuntingButton,color=(255,255,255),hover_color=(255,0,200)
+
+        #### Go hunting ######
+        self.goHuntingButton = Button(padding,padding,buttonWidth,buttonHeight,"Go Hunting",self.menu_button_font,action=self._goHuntingButton,color=(255,255,255),hover_color=(255,0,200)
                              )
-        
-        self.buttons.append(self.testBtn)
+        self.buttons.append(self.goHuntingButton)
+      
+
+        ### Go bed #####
+        goBedButton_y = padding + buttonHeight + padding
+        self.goBedButton = Button(padding,goBedButton_y,buttonWidth,buttonHeight,"Go Bed",self.menu_button_font,action=self._goBedButton,color=(255,255,255),hover_color=(255,0,200)
+                             )
+        self.buttons.append(self.goBedButton)
+
 
     def _goHuntingButton(self):
         chosen_item_name = random.choices(self.possible_item_names, weights=self.item_weights, k=1)[0]
+       
 
 
         chosen_item_data = next((item for item in self.all_game_items_data if item["name"] == chosen_item_name), None)
@@ -95,12 +106,17 @@ class Game:
 
             effect_type = chosen_item_data.get("effect_type")
             effect_value = chosen_item_data.get("effect_value", 0) 
-
+            damage_amount =chosen_item_data.get('damage_amout',0)
             if effect_type == "none":
                 pass
-
+            
+            elif effect_type == "fall_and_damage":
+                self.wolf.takeDamage(damage_amount)
             else:
                 print(f"Item '{chosen_item_data['name']}' has an unsupported effect type: {effect_type}.")
         else:
             print(f"Error: Could not find data for item '{chosen_item_name}'.")
         # -----------------------------------------------------
+
+    def _goBedButton(self):
+        print("press")

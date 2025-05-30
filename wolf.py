@@ -23,6 +23,21 @@ class Wolf(pygame.sprite.Sprite):
         self.rect.center = (x, y)
 
 
+        #####  Health bar & Font #####
+
+        self.healthBar_width = 400
+        self.healthBar_height = 40
+        self.maxHealth = 100
+        self.paddingTop = 20
+        self.currentHealth = self.maxHealth
+        
+        self.healthBarFontColor = (255,255,255)
+        self.healthBarFontSize = 30
+        self.healthBarFont = pygame.font.Font(None,self.healthBarFontSize)
+
+        
+
+
     def load_frames(self):
     
         scaledWidth = spriteWidth * spriteScale
@@ -54,3 +69,30 @@ class Wolf(pygame.sprite.Sprite):
             self.last_update = now
             self.current_frame = (self.current_frame + 1) % len(self.frames)
             self.image = self.frames[self.current_frame]
+        
+
+    def takeDamage(self,amount):
+        self.currentHealth -= amount
+        if self.currentHealth <= 0:
+            self.currentHealth = 0
+            print("Wolf is dead!")
+
+        print(f"Wolf took {amount} damage. Current health: {self.currentHealth}")
+
+    def draw_health_bar(self, screen, screen_width):
+        bar_x = (screen_width // 2) - (self.healthBar_width // 2)
+        bar_y = self.paddingTop
+
+        fill_width = int((self.currentHealth / self.maxHealth) * self.healthBar_width)
+
+        pygame.draw.rect(screen, (50, 50, 50), (bar_x, bar_y, self.healthBar_width, self.healthBar_height))
+        pygame.draw.rect(screen, (0, 200, 0), (bar_x, bar_y, fill_width, self.healthBar_height))
+        pygame.draw.rect(screen, (255, 255, 255), (bar_x, bar_y, self.healthBar_width, self.healthBar_height), 2)
+
+
+        # --- Draw Health Text Center---
+        health_text = self.healthBarFont.render(f"{self.currentHealth}/{self.maxHealth}", True, self.healthBarFontColor)
+        text_x = bar_x + (self.healthBar_width // 2) - (health_text.get_width() // 2)
+        text_y = bar_y + (self.healthBar_height // 2) - (health_text.get_height() // 2)
+        screen.blit(health_text, (text_x, text_y))
+   
