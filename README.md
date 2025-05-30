@@ -1,5 +1,7 @@
 # Little Wolf Evolved - Game Jam Submission  
 ![image](https://github.com/user-attachments/assets/80addacf-e986-4524-b33e-39f334a64cb4)
+![image](https://github.com/user-attachments/assets/d8d2945b-1e88-4791-bb3d-2d57820c0cda)
+
 
 
 🎮 **About this game**  
