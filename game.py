@@ -79,7 +79,7 @@ class Game:
 
         self.testBtn = Button(padding,padding,buttonWidth,buttonHeight,"Go Hunting",self.menu_button_font,action=self._goHuntingButton,color=(255,255,255),hover_color=(255,0,200)
                              )
-
+        
         self.buttons.append(self.testBtn)
 
     def _goHuntingButton(self):
