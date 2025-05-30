@@ -11,7 +11,10 @@
 -Krita
 
 🎯 **How to play**  
-→ -
+→ -Clicker
+  -Upgrade
+  -Finding resource
+  
 
 📥 **Play**  
 Link
