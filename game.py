@@ -4,6 +4,7 @@ import random
 from wolf import Wolf
 from button import Button
 from item_data import ALL_GAME_ITEMS,POSSIBLE_ITEM_NAMES,ITEM_WEIGHTS
+from textItemShow import TextShowRandomItem
 class Game:
     def __init__(self,screen_width,screen_height,caption):
        self.screen_width = screen_width
@@ -41,6 +42,9 @@ class Game:
        self.possible_item_names = POSSIBLE_ITEM_NAMES
        self.item_weights = ITEM_WEIGHTS
 
+        
+       self.item_display_text = None 
+
 
     def handle_event(self):
         for event in pygame.event.get():
@@ -55,6 +59,9 @@ class Game:
         self.screen.blit(self.background,(0,0))
         self.all_sprites.draw(self.screen)
         self.wolf.draw_health_bar(self.screen,self.screen_width)
+
+        if self.item_display_text:
+            self.item_display_text.draw(self.screen)
         for button in self.buttons:
             button.draw(self.screen)
 
@@ -99,10 +106,26 @@ class Game:
 
         chosen_item_data = next((item for item in self.all_game_items_data if item["name"] == chosen_item_name), None)
 
+       
+
+
         if chosen_item_data:
-            print(f"Your found[{chosen_item_data['name']}]!")
-   
-            print(f"Description: {chosen_item_data.get('description', 'No description available.')}")
+
+            item_message = f"Found: {chosen_item_data['name']}!. {chosen_item_data.get('description', 'No description available.')}"
+            print(item_message)
+           
+            self.item_display_text = TextShowRandomItem(
+                item_message,
+                screenWidth=self.screen_width,
+                screenHeight=self.screen_height,
+                color=(255, 255, 255) 
+            )
+            
+
+
+            # print(f"Your found[{chosen_item_data['name']}]!")
+    
+            # print(f"Description: {chosen_item_data.get('description', 'No description available.')}")
 
             effect_type = chosen_item_data.get("effect_type")
             effect_value = chosen_item_data.get("effect_value", 0) 
