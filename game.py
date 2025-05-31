@@ -122,7 +122,7 @@ class Game:
             )
             
 
-
+            self.item_display_text.show()
             # print(f"Your found[{chosen_item_data['name']}]!")
     
             # print(f"Description: {chosen_item_data.get('description', 'No description available.')}")
