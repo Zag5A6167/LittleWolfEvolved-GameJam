@@ -6,6 +6,8 @@
 
 🎮 **About this game**  
 → Little Wolf Evolved
+-Theme(Wild)
+
 
 🛠️ **Tools**  
 -Pygame
