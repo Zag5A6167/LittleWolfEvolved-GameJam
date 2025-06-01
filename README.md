@@ -24,6 +24,9 @@
 Link
   -(Waiting after fisnish)
 
+  **Development Deadline**
+  -7 days
+
 👥 **Dev teams**  
   Hex5A6167(Zag)
 
