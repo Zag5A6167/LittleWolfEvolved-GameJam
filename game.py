@@ -58,7 +58,12 @@ class Game:
         # self.screen.fill((255,255,0))
         self.screen.blit(self.background,(0,0))
         self.all_sprites.draw(self.screen)
+
+
+        ### Draw Bar Status ####
         self.wolf.draw_health_bar(self.screen,self.screen_width)
+        self.wolf.draw_energy_bar(self.screen,self.screen_width)
+
 
         if self.item_display_text:
             self.item_display_text.draw(self.screen)
@@ -69,7 +74,7 @@ class Game:
         pygame.display.flip()
     def update(self):
         self.all_sprites.update()
-
+        self.wolf.updateEnergyBar()
 
     def run(self):
         while self.running:
@@ -100,46 +105,46 @@ class Game:
 
 
     def _goHuntingButton(self):
-        chosen_item_name = random.choices(self.possible_item_names, weights=self.item_weights, k=1)[0]
-       
+        if self.wolf.currentEnergy >= 2:
+            self.wolf.currentEnergy -= 2
+            chosen_item_name = random.choices(self.possible_item_names, weights=self.item_weights, k=1)[0]
+        
 
 
-        chosen_item_data = next((item for item in self.all_game_items_data if item["name"] == chosen_item_name), None)
+            chosen_item_data = next((item for item in self.all_game_items_data if item["name"] == chosen_item_name), None)
 
-       
+        
 
 
-        if chosen_item_data:
+            if chosen_item_data:
 
-            item_message = f"Found: {chosen_item_data['name']}!. {chosen_item_data.get('description', 'No description available.')}"
-            print(item_message)
-           
-            self.item_display_text = TextShowRandomItem(
-                item_message,
-                screenWidth=self.screen_width,
-                screenHeight=self.screen_height,
-                color=(255, 255, 255) 
-            )
+                item_message = f"Found: {chosen_item_data['name']}!. {chosen_item_data.get('description', 'No description available.')}"
+                print(item_message)
+            
+                self.item_display_text = TextShowRandomItem(
+                    item_message,
+                    screenWidth=self.screen_width,
+                    screenHeight=self.screen_height,
+                    color=(255, 255, 255) 
+                )
+                
+
+                self.item_display_text.show()
             
 
-            self.item_display_text.show()
-            # print(f"Your found[{chosen_item_data['name']}]!")
-    
-            # print(f"Description: {chosen_item_data.get('description', 'No description available.')}")
-
-            effect_type = chosen_item_data.get("effect_type")
-            effect_value = chosen_item_data.get("effect_value", 0) 
-            damage_amount =chosen_item_data.get('damage_amout',0)
-            if effect_type == "none":
-                pass
-            
-            elif effect_type == "fall_and_damage":
-                self.wolf.takeDamage(damage_amount)
+                effect_type = chosen_item_data.get("effect_type")
+                effect_value = chosen_item_data.get("effect_value", 0) 
+                damage_amount =chosen_item_data.get('damage_amout',0)
+                if effect_type == "none":
+                    pass
+                
+                elif effect_type == "fall_and_damage":
+                    self.wolf.takeDamage(damage_amount)
+                else:
+                    print(f"Item '{chosen_item_data['name']}' has an unsupported effect type: {effect_type}.")
             else:
-                print(f"Item '{chosen_item_data['name']}' has an unsupported effect type: {effect_type}.")
-        else:
-            print(f"Error: Could not find data for item '{chosen_item_name}'.")
-        # -----------------------------------------------------
+                print(f"Error: Could not find data for item '{chosen_item_name}'.")
+            # -----------------------------------------------------
 
     def _goBedButton(self):
         print("press")

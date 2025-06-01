@@ -5,6 +5,8 @@ spriteHeight = 64
 
 spriteScale = 6
 
+LIGHT_BLUE = (173, 216, 230) ### (Light Blue)
+
 class Wolf(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__() 
@@ -35,8 +37,19 @@ class Wolf(pygame.sprite.Sprite):
         self.healthBarFontSize = 30
         self.healthBarFont = pygame.font.Font(None,self.healthBarFontSize)
 
+        ## Enery Bar #####
+        self.energyBar_width = 400
+        self.energyBar_height = 40
+        self.maxEnergy = 100
         
-
+        self.currentEnergy = 0
+        
+        self.energyBarFontColor = (255,255,255)
+        self.energyBarFontSize = 30
+        self.energyBarFont = pygame.font.Font(None,self.energyBarFontSize)
+       
+        self.last_energyBar_update = pygame.time.get_ticks()
+        self.energyBar_update_delay = 1000
 
     def load_frames(self):
     
@@ -96,3 +109,33 @@ class Wolf(pygame.sprite.Sprite):
         text_y = bar_y + (self.healthBar_height // 2) - (health_text.get_height() // 2)
         screen.blit(health_text, (text_x, text_y))
    
+
+    def draw_energy_bar(self, screen, screen_width):
+        
+        bar_x = (screen_width // 2) - (self.healthBar_width // 2)
+        bar_y = self.paddingTop + self.healthBar_height
+
+        fill_width = int((self.currentEnergy / self.maxEnergy) * self.energyBar_width)
+
+        pygame.draw.rect(screen, (50, 50, 50), (bar_x, bar_y, self.energyBar_width, self.energyBar_height))
+
+        ## prcess ###
+        pygame.draw.rect(screen, (LIGHT_BLUE), (bar_x, bar_y, fill_width, self.energyBar_height))
+        pygame.draw.rect(screen, (255, 255, 255), (bar_x, bar_y, self.energyBar_width, self.energyBar_height), 2)
+
+
+        # --- Draw Health Text Center---
+        energy_text = self.energyBarFont.render(f"{self.currentEnergy}/{self.maxEnergy}", True, self.energyBarFontColor)
+        text_x = bar_x + (self.energyBar_width // 2) - (energy_text.get_width() // 2)
+        text_y = bar_y + (self.energyBar_height // 2) - (energy_text.get_height() // 2)
+        screen.blit(energy_text, (text_x, text_y))
+
+
+    def updateEnergyBar(self):
+
+        now = pygame.time.get_ticks()
+        if now - self.last_energyBar_update > self.energyBar_update_delay:
+            self.last_energyBar_update = now
+            self.currentEnergy += 1
+            if self.currentEnergy >= self.maxEnergy:
+                self.currentEnergy = self.maxEnergy
