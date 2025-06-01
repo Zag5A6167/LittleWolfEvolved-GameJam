@@ -24,7 +24,7 @@
 Link
   -(Waiting after fisnish)
 
-  **Development Deadline**
+  **Development Deadline**<br>
   -7 days
 
 👥 **Dev teams**  
