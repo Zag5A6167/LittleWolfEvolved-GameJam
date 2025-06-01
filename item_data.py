@@ -23,7 +23,7 @@ ALL_GAME_ITEMS = [
 
     },
     {
-        "name": "Fever.",
+        "name": "",
         "weight": 0.05,
         "description": " Your body is burning hot!",
         "effect_type": "fever",

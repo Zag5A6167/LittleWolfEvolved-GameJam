@@ -58,6 +58,20 @@ class Wolf(pygame.sprite.Sprite):
         self.last_energyBar_update = pygame.time.get_ticks()
         self.energyBar_update_delay = 100
 
+        ### Status ATK DEF ... ###
+    
+        self.paddingX_status = 50
+        self.paddingY_status = 10
+        self.text_status = pygame.font.Font(None,32)
+        self.text_status_atk_surface = self.text_status.render(f"ATK: {self.attack}",True,(255,255,255))
+        self.text_status_atk_surface_rect = self.text_status_atk_surface.get_rect(center=(200,300)) 
+
+        ## DEF###
+        self.text_status_def_surface = self.text_status.render(f"DEF: {self.attack}",True,(255,255,255))
+        self.text_status_def_surface_rect = self.text_status_def_surface.get_rect(center=(200,300)) 
+
+        ########################
+
     def load_frames(self):
     
         scaledWidth = spriteWidth * spriteScale
@@ -82,6 +96,8 @@ class Wolf(pygame.sprite.Sprite):
 
     def update(self):
         self.animate_idle()
+        self.updateStatus()
+     
         
 
     def animate_idle(self):
@@ -150,3 +166,34 @@ class Wolf(pygame.sprite.Sprite):
             self.currentEnergy += 1
             if self.currentEnergy >= self.maxEnergy:
                 self.currentEnergy = self.maxEnergy
+
+    def updateStatus(self):
+         self.text_status_surface = self.text_status.render(
+            f"ATK: {self.attack}",
+            True, 
+            (255, 255, 255) 
+            
+        )
+        
+    def draw_status(self, screen):
+    
+        padding_top = 10
+        ## ATK ###
+        bar_x = (screen.get_width() // 2) - (self.healthBar_width // 2) 
+        bar_y = self.paddingTop * 1.2  + self.healthBar_height + self.energyBar_height + padding_top
+
+        bar_y_def = bar_y * 1.2 + padding_top
+        screen.blit(self.text_status_atk_surface, (bar_x,bar_y))
+
+
+        ## DEF ###
+     
+
+        screen.blit(self.text_status_def_surface, (bar_x,bar_y_def))
+
+
+
+         
+
+
+    

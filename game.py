@@ -50,11 +50,16 @@ class Game:
        self.paddingX_coin = 50
        self.paddingY_coin = 10
        self.text_coin = pygame.font.Font(None,32)
-       self.text_coin_surface = self.text_coin.render(f"Coin {self.wolf.coins}",True,(255,255,255))
+       self.text_coin_surface = self.text_coin.render(f"Money: {self.wolf.coins}",True,(255,255,255))
        self.text_coin_surface_rect = self.text_coin_surface.get_rect(center=(self.screen_width_center,self.screen_height_center)) 
        ######################
-       
         
+
+
+       
+        ### cost value upgrade## #
+       self.costAtkUpgrade = 5
+       self.costDefUpgrade = 5
 
 
         ### item data ###
@@ -94,13 +99,13 @@ class Game:
             self.screen.blit(self.background,(0,0))
             self.all_sprites.draw(self.screen)
             
+            
             self.screen.blit(self.text_coin_surface,(self.paddingX_coin,self.paddingY_coin))
-
             ### Draw Bar Status ####
             self.wolf.draw_health_bar(self.screen,self.screen_width)
             self.wolf.draw_energy_bar(self.screen,self.screen_width)
-
-
+            self.wolf.draw_status(self.screen)
+      
             if self.item_display_text:
                 self.item_display_text.draw(self.screen)
             for button in self.buttons:
@@ -136,7 +141,7 @@ class Game:
     def _update_coin_text_surface(self):
         
         self.text_coin_surface = self.text_coin.render(
-            f"Coin {self.wolf.coins}",
+            f"Money: {self.wolf.coins}",
             True, 
             (255, 255, 255) 
         )
@@ -164,14 +169,15 @@ class Game:
         ### right button for status ## 
 
         padding_status = 50
-        self.buttonAtkStatus  = Button(self.screen_width - buttonWidth - padding_status,padding_status,buttonWidth,buttonHeight,"ATK Upgrade",self.menu_button_font,action=None,color=(255,255,255),hover_color=(255,0,200))
+        self.buttonAtkStatus  = Button(self.screen_width - buttonWidth - padding_status,padding_status,buttonWidth,buttonHeight,"ATK Upgrade",self.menu_button_font,action=self._buttonAtkUpgrade,color=(255,255,255),hover_color=(255,0,200))
         self.buttons.append(self.buttonAtkStatus)
 
 
  
     
-        self.buttonDefStatus  = Button(self.screen_width - buttonWidth - padding_status,padding_status + buttonHeight + padding,buttonWidth,buttonHeight,"Def Upgrade",self.menu_button_font,action=None,color=(255,255,255),hover_color=(255,0,200))
+        self.buttonDefStatus  = Button(self.screen_width - buttonWidth - padding_status,padding_status + buttonHeight + padding,buttonWidth,buttonHeight,"Def Upgrade",self.menu_button_font,action=self._buttonDefUpgrade,color=(255,255,255),hover_color=(255,0,200))
         self.buttons.append(self.buttonDefStatus)
+
 
 
     def _goHuntingButton(self):
@@ -214,9 +220,9 @@ class Game:
                 elif effect_type == "fever":
                     self.wolf.takeDamage(damage_amount)
                 elif effect_type == "gold":
-                    print(effect_value)
+            
                     self.wolf.addCoin(effect_value)
-                    print(self.wolf.coins)
+                   
                     
                 else:
                     print(f"Item '{chosen_item_data['name']}' has an unsupported effect type: {effect_type}.")
@@ -226,3 +232,15 @@ class Game:
 
     def _goBedButton(self):
         print("press")
+
+
+    def _buttonAtkUpgrade(self):
+        if self.wolf.coins >= self.costAtkUpgrade:
+            self.wolf.coins -= self.costAtkUpgrade
+            self.wolf.attack += 1
+            
+    
+    def _buttonDefUpgrade(self):
+        if self.wolf.coins >= self.costDefUpgrade:
+            self.wolf.coins -= self.costDefUpgrade
+            self.wolf.defense += 1
