@@ -18,7 +18,7 @@ ALL_GAME_ITEMS = [
         "weight": 0.90,
         "description": "You slipped on a banana and lost 2 health.",
         "effect_type": "fall_and_damage",
-        "damage_amount": 50
+        "damage_amount": 2
         
 
     },
