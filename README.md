@@ -5,7 +5,7 @@
 
 
 🎮 **About this game**  
-→ Little Wolf Evolved
+→ Little Wolf Evolved<br>
 -Theme(Wild)
 
 
@@ -15,9 +15,9 @@
 -Krita
 
 🎯 **How to play**  
-→ -Clicker
-  -Upgrade
-  -Finding resource
+→ -Clicker<br>
+  -Upgrade<br>
+  -Finding resource<br>
   
 
 📥 **Play**  
