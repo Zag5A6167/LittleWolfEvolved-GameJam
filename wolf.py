@@ -25,6 +25,10 @@ class Wolf(pygame.sprite.Sprite):
         self.rect.center = (x, y)
 
 
+        ### Status ###
+        self.attack = 1
+        self.defense = 1
+
         #####  Health bar & Font #####
 
         self.healthBar_width = 400
@@ -49,7 +53,7 @@ class Wolf(pygame.sprite.Sprite):
         self.energyBarFont = pygame.font.Font(None,self.energyBarFontSize)
        
         self.last_energyBar_update = pygame.time.get_ticks()
-        self.energyBar_update_delay = 1000
+        self.energyBar_update_delay = 100
 
     def load_frames(self):
     
