@@ -32,9 +32,10 @@ ALL_GAME_ITEMS = [
     },
       {
         "name": "Money",
-        "weight": 0.2,
+        "weight": 0.8,
         "description": " +1",
         "effect_type": "gold",
+        "effect_value": 1
      
         
     },

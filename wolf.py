@@ -26,7 +26,7 @@ class Wolf(pygame.sprite.Sprite):
 
 
         ## coin ## 
-        self.coin = 0
+        self.coins = 0
 
         ### Status ###
         self.attack = 1
@@ -56,7 +56,7 @@ class Wolf(pygame.sprite.Sprite):
         self.energyBarFont = pygame.font.Font(None,self.energyBarFontSize)
        
         self.last_energyBar_update = pygame.time.get_ticks()
-        self.energyBar_update_delay = 1500
+        self.energyBar_update_delay = 100
 
     def load_frames(self):
     
@@ -82,6 +82,7 @@ class Wolf(pygame.sprite.Sprite):
 
     def update(self):
         self.animate_idle()
+        
 
     def animate_idle(self):
         now = pygame.time.get_ticks()
@@ -89,7 +90,10 @@ class Wolf(pygame.sprite.Sprite):
             self.last_update = now
             self.current_frame = (self.current_frame + 1) % len(self.frames)
             self.image = self.frames[self.current_frame]
-        
+
+    def addCoin(self,amount):
+        self.coins += amount
+        return self.coins
 
     def takeDamage(self,amount):
         self.currentHealth -= amount

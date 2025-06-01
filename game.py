@@ -43,6 +43,20 @@ class Game:
        self.all_sprites.add(self.wolf)
        
       
+
+        ### Text ####
+
+        ## -- coin ##
+       self.paddingX_coin = 50
+       self.paddingY_coin = 10
+       self.text_coin = pygame.font.Font(None,32)
+       self.text_coin_surface = self.text_coin.render(f"Coin {self.wolf.coins}",True,(255,255,255))
+       self.text_coin_surface_rect = self.text_coin_surface.get_rect(center=(self.screen_width_center,self.screen_height_center)) 
+       ######################
+       
+        
+
+
         ### item data ###
        self.all_game_items_data = ALL_GAME_ITEMS
        self.possible_item_names = POSSIBLE_ITEM_NAMES
@@ -66,7 +80,7 @@ class Game:
                     if event.key == pygame.K_r:
                         print("press r")
                         ### reset status
-                        self.wolf.coin = 0
+                        self.wolf.coins = 0
                         self.wolf.maxEnergy = 100
                         self.wolf.maxHealth = 100
                         self.wolf.currentEnergy = 0
@@ -79,7 +93,8 @@ class Game:
             self.screen.fill((255,255,0))
             self.screen.blit(self.background,(0,0))
             self.all_sprites.draw(self.screen)
-
+            
+            self.screen.blit(self.text_coin_surface,(self.paddingX_coin,self.paddingY_coin))
 
             ### Draw Bar Status ####
             self.wolf.draw_health_bar(self.screen,self.screen_width)
@@ -105,7 +120,8 @@ class Game:
     def update(self):
         self.all_sprites.update()
         self.wolf.updateEnergyBar()
-
+        self.wolf.update()
+        self._update_coin_text_surface()
         if self.wolf.currentHealth == 0:
             self.current_game_state = self.GAME_STATE_GAMEOVER
 
@@ -117,6 +133,13 @@ class Game:
         pygame.quit()
 
 
+    def _update_coin_text_surface(self):
+        
+        self.text_coin_surface = self.text_coin.render(
+            f"Coin {self.wolf.coins}",
+            True, 
+            (255, 255, 255) 
+        )
     def setup_menu_btn(self):
         buttonWidth = 200
         buttonHeight = 80
@@ -137,8 +160,10 @@ class Game:
         self.buttons.append(self.goBedButton)
 
 
+
         ### right button for status ## 
-        padding_status = 100
+
+        padding_status = 50
         self.buttonAtkStatus  = Button(self.screen_width - buttonWidth - padding_status,padding_status,buttonWidth,buttonHeight,"ATK Upgrade",self.menu_button_font,action=None,color=(255,255,255),hover_color=(255,0,200))
         self.buttons.append(self.buttonAtkStatus)
 
@@ -189,8 +214,10 @@ class Game:
                 elif effect_type == "fever":
                     self.wolf.takeDamage(damage_amount)
                 elif effect_type == "gold":
-                    self.wolf.coin+= 1
-                    print(self.wolf.coin)
+                    print(effect_value)
+                    self.wolf.addCoin(effect_value)
+                    print(self.wolf.coins)
+                    
                 else:
                     print(f"Item '{chosen_item_data['name']}' has an unsupported effect type: {effect_type}.")
             else:
