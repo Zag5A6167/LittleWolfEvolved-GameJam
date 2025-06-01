@@ -39,6 +39,16 @@ ALL_GAME_ITEMS = [
      
         
     },
+
+    {
+        "name": "EXP Gained: +",
+        "weight": 0.8,
+        "description": "1",
+        "effect_type": "experience_gain",
+        "exp_amount": 3
+     
+        
+    },
    
     
 

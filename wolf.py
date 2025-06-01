@@ -32,6 +32,11 @@ class Wolf(pygame.sprite.Sprite):
         self.attack = 1
         self.defense = 1
 
+        ## Level ##
+        self.level = 1
+        self.maxExp = 10
+        self.currentExp = 0
+
         #####  Health bar & Font #####
 
         self.healthBar_width = 400
@@ -97,6 +102,7 @@ class Wolf(pygame.sprite.Sprite):
     def update(self):
         self.animate_idle()
         self.updateStatus()
+        
      
         
 
@@ -168,13 +174,23 @@ class Wolf(pygame.sprite.Sprite):
                 self.currentEnergy = self.maxEnergy
 
     def updateStatus(self):
-         self.text_status_surface = self.text_status.render(
+         self.text_status_atk_surface = self.text_status.render(
             f"ATK: {self.attack}",
+            True, 
+            (255, 255, 255) 
+            
+
+        )
+         
+         self.text_status_def_surface = self.text_status.render(
+            f"DEF: {self.defense}",
             True, 
             (255, 255, 255) 
             
         )
         
+
+
     def draw_status(self, screen):
     
         padding_top = 10
@@ -192,8 +208,28 @@ class Wolf(pygame.sprite.Sprite):
         screen.blit(self.text_status_def_surface, (bar_x,bar_y_def))
 
 
+    def levelUp(self):
+        while self.currentExp >= self.maxExp:
+            self.level += 1 
+            self.currentExp -= self.maxExp 
+            
+       
+            self.maxExp = int(self.maxExp * 1.2) 
+            
+            ## when level up increse stat
+            self.attack += 1 
+            self.defense += 1 
+            self.maxHealth += 10 
+            self.currentHealth = self.maxHealth 
+
+            print(f"*** Wolf Leveled Up! New Level: {self.level}, ATK: {self.attack}, DEF: {self.defense}, Max HP: {self.maxHealth} ***")
+            print(f"Next level requires: {self.maxExp} EXP")
+            
 
          
 
 
-    
+    def gain_exp(self,exp_amount):
+        self.currentExp += exp_amount
+        if self.currentExp >= self.maxExp:
+            self.levelUp()

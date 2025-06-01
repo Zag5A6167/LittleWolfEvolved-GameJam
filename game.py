@@ -194,7 +194,7 @@ class Game:
 
             if chosen_item_data:
 
-                item_message = f"Found: {chosen_item_data['name']}!. {chosen_item_data.get('description', 'No description available.')}"
+                item_message = f"Found: {chosen_item_data['name']}. {chosen_item_data.get('description', 'No description available.')}"
                 print(item_message)
             
                 self.item_display_text = TextShowRandomItem(
@@ -211,18 +211,21 @@ class Game:
                 effect_type = chosen_item_data.get("effect_type")
                 effect_value = chosen_item_data.get("effect_value", 0) 
                 damage_amount =chosen_item_data.get('damage_amount',0)
+                exp_amount = chosen_item_data.get('exp_amount',0)
                 if effect_type == "none":
                     pass
                 
                 elif effect_type == "fall_and_damage":
-                    self.wolf.takeDamage(damage_amount)
+                    self.wolf.takeDamage(damage_amount) ## pure damage
                    
                 elif effect_type == "fever":
-                    self.wolf.takeDamage(damage_amount)
+                    self.wolf.takeDamage(damage_amount - self.wolf.defense)
                 elif effect_type == "gold":
             
                     self.wolf.addCoin(effect_value)
-                   
+                elif effect_type == "experience_gain":
+                    self.wolf.gain_exp(exp_amount)
+                 
                     
                 else:
                     print(f"Item '{chosen_item_data['name']}' has an unsupported effect type: {effect_type}.")
