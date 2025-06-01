@@ -18,7 +18,7 @@ ALL_GAME_ITEMS = [
         "weight": 0.90,
         "description": "You slipped on a banana and lost 2 health.",
         "effect_type": "fall_and_damage",
-        "damage_amount": 2
+        "damage_amount": 50
         
 
     },
@@ -27,7 +27,15 @@ ALL_GAME_ITEMS = [
         "weight": 0.05,
         "description": " Your body is burning hot!",
         "effect_type": "fever",
-        "damage_amount": 20
+        "damage_amount": 30
+        
+    },
+      {
+        "name": "Money",
+        "weight": 0.2,
+        "description": " +1",
+        "effect_type": "gold",
+     
         
     },
    

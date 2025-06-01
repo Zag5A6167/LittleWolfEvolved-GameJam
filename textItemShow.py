@@ -14,7 +14,7 @@ class TextShowRandomItem:
 
 
         self.display_start_time = None
-        self.display_duration = 1500  
+        self.display_duration = 1000
         self.active = False 
 
         self._update_surface()

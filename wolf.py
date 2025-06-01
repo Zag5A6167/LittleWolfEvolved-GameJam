@@ -25,6 +25,9 @@ class Wolf(pygame.sprite.Sprite):
         self.rect.center = (x, y)
 
 
+        ## coin ## 
+        self.coin = 0
+
         ### Status ###
         self.attack = 1
         self.defense = 1
@@ -53,7 +56,7 @@ class Wolf(pygame.sprite.Sprite):
         self.energyBarFont = pygame.font.Font(None,self.energyBarFontSize)
        
         self.last_energyBar_update = pygame.time.get_ticks()
-        self.energyBar_update_delay = 100
+        self.energyBar_update_delay = 1500
 
     def load_frames(self):
     
@@ -108,7 +111,7 @@ class Wolf(pygame.sprite.Sprite):
 
 
         # --- Draw Health Text Center---
-        health_text = self.healthBarFont.render(f"{self.currentHealth}/{self.maxHealth}", True, self.healthBarFontColor)
+        health_text = self.healthBarFont.render(f"HP {self.currentHealth}/{self.maxHealth}", True, self.healthBarFontColor)
         text_x = bar_x + (self.healthBar_width // 2) - (health_text.get_width() // 2)
         text_y = bar_y + (self.healthBar_height // 2) - (health_text.get_height() // 2)
         screen.blit(health_text, (text_x, text_y))
@@ -117,7 +120,7 @@ class Wolf(pygame.sprite.Sprite):
     def draw_energy_bar(self, screen, screen_width):
         
         bar_x = (screen_width // 2) - (self.healthBar_width // 2)
-        bar_y = self.paddingTop + self.healthBar_height
+        bar_y = self.paddingTop * 1.2  + self.healthBar_height
 
         fill_width = int((self.currentEnergy / self.maxEnergy) * self.energyBar_width)
 
@@ -128,8 +131,8 @@ class Wolf(pygame.sprite.Sprite):
         pygame.draw.rect(screen, (255, 255, 255), (bar_x, bar_y, self.energyBar_width, self.energyBar_height), 2)
 
 
-        # --- Draw Health Text Center---
-        energy_text = self.energyBarFont.render(f"{self.currentEnergy}/{self.maxEnergy}", True, self.energyBarFontColor)
+        # --- Draw Energy Text Center---
+        energy_text = self.energyBarFont.render(f"Energy {self.currentEnergy}/{self.maxEnergy}", True, self.energyBarFontColor)
         text_x = bar_x + (self.energyBar_width // 2) - (energy_text.get_width() // 2)
         text_y = bar_y + (self.energyBar_height // 2) - (energy_text.get_height() // 2)
         screen.blit(energy_text, (text_x, text_y))
