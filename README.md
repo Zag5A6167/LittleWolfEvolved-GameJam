@@ -10,9 +10,9 @@
 
 
 🛠️ **Tools**  
--Pygame
--Python
--Krita
+-Pygame<br>
+-Python<br>
+-Krita<br>
 
 🎯 **How to play**  
 → -Clicker<br>
