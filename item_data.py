@@ -49,6 +49,14 @@ ALL_GAME_ITEMS = [
      
         
     },
+    {
+        "name": "Water",
+        "weight": 0.2,
+        "description": "No value",
+       
+     
+        
+    },
    
     
 
