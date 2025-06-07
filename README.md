@@ -1,4 +1,4 @@
-# Little Wolf Evolved - Game Jam Submission  (Processing)
+# Little Wolf Evolved - Game Jam Submission  (not finish)
 
 
 
